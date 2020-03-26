@@ -4,12 +4,17 @@ Installing Qiskit
 Requirements
 ------------
 
-Qiskit supports Python 3.5 or later.
+Qiskit supports Python 3.5 or later. However, both Python and Qiskit are
+evolving ecosystems, and sometimes when new releases occur in one or the other,
+there can be problems with compatibility.
+
+If you're having trouble installing or using Qiskit after updating Python, check
+the `Qiskit Package metadata <https://pypi.org/project/qiskit/>`__ for
+**Programming Language** to see which specific versions of Python are supported.
 
 We recommend installing `Anaconda <https://www.anaconda.com/download/>`__, a
-cross-platform Python distribution for scientific computing. Jupyter Notebook,
-included in Anaconda, is recommended for interacting with the `Qiskit tutorials
-<https://github.com/Qiskit/qiskit-tutorial>`__.
+cross-platform Python distribution for scientific computing. Jupyter,
+included in Anaconda, is recommended for interacting with Qiskit.
 
 Qiskit is tested and supported on the following 64-bit systems:
 
@@ -24,11 +29,6 @@ the following:
   go.microsoft.com/fwlink/?LinkId=746572>`__
 * `Microsoft Visual C++ Redistributable for Visual Studio 2015 <https://
   www.microsoft.com/en-US/download/details.aspx?id=48145>`__
-
-
-.. note::
-  If you want to contribute to the Qiskit community by developing and contributing code
-  with the most recently updated Qiskit code, see :ref:`Build Qiskit packages from source <install_install_from_source_label>`.
 
 
 Install
@@ -75,14 +75,16 @@ Next, install the Qiskit package, which includes Terra, Aer, Ignis, and Aqua.
 
   pip install qiskit
 
-If the packages installed correctly, you can run ``conda list`` to see the active
-packages in your virtual environment.
-
 .. note::
 
-  During installation, you might see the warning message
-  ``Failed to build qiskit``. This is a non-fatal error that does not affect
-  installation.
+  Starting with Qiskit 0.13.0 pip 19 or newer is needed to install qiskit-aer
+  from precompiled binary on Linux. If you do not have pip 19 installed you can
+  run ``pip install -U pip`` to upgrade it. Without pip 19 or newer this
+  command will attempt to install qiskit-aer from sdist (source distribution)
+  which will try to compile aer locally under the covers.
+
+If the packages installed correctly, you can run ``conda list`` to see the active
+packages in your virtual environment.
 
 .. note::
 
@@ -106,35 +108,39 @@ them into your environment with Python to begin working.
 
 .. _install_access_ibm_q_devices_label:
 
+.. note::
+  If you want to contribute to the Qiskit community by developing and contributing code
+  with the most recently updated Qiskit code, see :ref:`Build Qiskit packages from source <install_install_from_source_label>`.
 
-Access IBM Q Systems
---------------------
 
-IBM Q offers several real quantum computers and high-performance classical
-computing simulators through its `quantum cloud services <https://www.research.ibm.com/ibm-q/technology/experience/>`__ with Qiskit. Follow
-these steps to set up your Qiskit environment to send jobs to IBM Q systems.
+Access IBM Quantum Systems
+--------------------------
+
+IBM Quantum offers several real quantum computers and high-performance classical
+computing simulators through its IBM Quantum Experience with Qiskit. Follow
+these steps to set up your Qiskit environment to send jobs to IBM Quantum systems.
 
 .. note::
 
-  With the release of Qiskit 0.11, if you had previously saved your IBM Q credentials locally, you
-  might need to update your IBM Q Experience credentials so that you can use the new IBM Q
-  Experience V2. See `Updating your IBM Q Experience Credentials
+  With the release of Qiskit 0.11, if you had previously saved your IBM Quantum credentials
+  locally, you might need to update your IBM Quantum Experience credentials so that you can
+  use the new IBM Quantum Experience V2. See `Updating your IBM Quantum Experience Credentials
   <https://github.com/Qiskit/qiskit-ibmq-provider/#updating-your-ibm-q-experience-credentials>`__.
 
 To configure your account, you create a local configuration file which includes an API key
 
-**1.** `Create a free IBM Q Experience account <https://quantum-computing.ibm.com/login>`__.
+**1.** `Create a free IBM Quantum Experience account <https://quantum-computing.ibm.com/login>`__.
 
 **2.**  Navigate to **My Account** to view your account settings.
 
-.. image:: /images/figures/install_my_account.png
+.. image:: /images/figures/install_0.png
    :alt: Image of where to find the section 'My accounts'.
 
 **3.** Click on **Copy token** to copy the token to your clipboard.
 Temporarily paste this API token into your favorite text editor so you can use it later to create
 an account configuration file.
 
-.. image:: /images/figures/install_api_token.png
+.. image:: /images/figures/install_1.png
    :alt: Image of where to get an API token.
 
 **4.** Run the following commands to store your API token locally for later use in a
@@ -147,8 +153,8 @@ stored in your text editor.
   IBMQ.save_account('MY_API_TOKEN')
 
 
-For more details, such as how to manage multiple IBM Q account credentials,
-refer to this tutorial titled `The IBM Q Account
+For more details, such as how to manage multiple IBM Quantum account credentials,
+refer to this tutorial titled `The IBM Quantum Account
 <https://github.com/Qiskit/qiskit-tutorials/blob/master/qiskit/fundamentals/3_the_ibmq_account.ipynb>`__.
 
 
@@ -161,33 +167,21 @@ returns only the version for the ``qiskit-terra`` package. This is because
 the ``qiskit`` namespace in Python doesn't come from the Qiskit package, but
 instead is part of the ``qiskit-terra`` package.
 
-.. code:: python
+.. jupyter-execute::
 
    import qiskit
    qiskit.__version__
 
-.. code-block:: text
-
-   0.8.2
 
 To see the versions of all the Qiskit elements in your environment you can use
 the ``__qiskit_version__`` attribute.
 For example, running the following command will return a dictionary
 that includes the versions for each of the installed Qiskit packages.
 
-.. code:: python
+.. jupyter-execute::
 
-   import qiskit
    qiskit.__qiskit_version__
 
-.. code-block:: text
-
-  {'qiskit': '0.11.0',
-  'qiskit-terra': '0.8.2',
-  'qiskit-ignis': '0.1.1',
-  'qiskit-aer': '0.2.3',
-  'qiskit-ibmq-provider': '0.3.0',
-  'qiskit-aqua': '0.5.2'}
 
 .. tip::
    If you're filing an issue or need to share your installed Qiskit versions for

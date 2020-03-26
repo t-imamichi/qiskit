@@ -11,42 +11,6 @@ Frequently Asked Questions
 
 |
 
-**Q: Why do I receive the error message** ``AttributeError: 'str' object has no
-attribute 'configuration'`` **when I try to execute or compile a circuit on a
-backend?**
-
-**A:** The backend parameter of these two functions takes in a ``BaseBackend`` type,
-which can be returned by calling one of these methods, one for simulators and one
-for real quantum devices.
-
-* For simulators:
-
-.. code:: python
-
-  Aer.get_backend('<backend_name>')
-
-* For real devices:
-
-.. code:: python
-
-  provider.get_backend('<backend_name>')
-
-For example, if you want to run a job on the ``'ibmqx4'`` backend, the
-following code would throw the error message:
-
-.. code:: python
-
-  job = execute(circuit, backend='ibmqx4', shots=100)
-
-Instead, the code should be written as
-
-.. code:: python
-
-  my_backend = provider.get_backend('ibmqx4')
-  job = execute(circuit, backend=my_backend, shots=100)
-
-|
-
 **Q: Why do I receive the error message** ``Error: Instance of QuantumCircuit has no
 member`` **when adding gates to a circuit?**
 
@@ -86,6 +50,33 @@ from the Anaconda-Navigator, it is possible that Jupyter Notebook is running
 in the base (root) environment, instead of in your virtual
 environment. Choose a virtual environment in the Anaconda-Navigator from the
 **Applications on** dropdown menu. In this menu, you can see
-see all of the virtual environments within Anaconda, and you can
+all of the virtual environments within Anaconda, and you can
 select the environment where you have Qiskit installed to launch Jupyter
 Notebook.
+
+|
+
+**Q: Why am I getting a compilation error while installing ``qiskit``?**
+
+**A:** Qiskit depends on a number of other open source Python packages, which
+are automatically installed when doing ``pip install qiskit``. Depending on
+your system's platform and Python version, is it possible that a particular
+package does not provide a pre-built binary wheel for your system, and in those
+cases ``pip`` will attempt to compile the package from source, which in turn
+might require some extra dependencies that need to be installed manually.
+
+If the output of ``pip install qiskit`` contains similar lines to:
+
+.. code:: sh
+
+  Failed building wheel for SOME_PACKAGE
+  ...
+  build/temp.linux-x86_64-3.5/_openssl.c:498:30: fatal error
+  compilation terminated.
+  error: command 'x86_64-linux-gnu-gcc' failed with exit status 1
+
+please check the documentation of the package that failed to install (in the
+example code, ``SOME_PACKAGE``) for information on how to install the libraries
+needed for compiling from source. For example:
+
+* ``cryptography``: https://cryptography.io/en/latest/installation/#building-cryptography-on-linux
